@@ -1,0 +1,19 @@
+{
+    "name": "ocean-backend-dev",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "api",
+    "workspaceFolder": "/app",
+    "settings": {
+      "python.defaultInterpreterPath": "/usr/local/bin/python",
+      "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+      "ms-python.python",
+      "ms-python.vscode-pylance"
+    ],
+    "remoteEnv": {
+      "PYTHONPATH": "/app"
+    },
+    "overrideCommand": false,
+    "postCreateCommand": "pip install -r requirements.txt"
+}

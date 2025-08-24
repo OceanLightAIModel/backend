@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: ocean-DB
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${OCEAN_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${OCEAN_DB}
+      MYSQL_USER: ${OCEAN_USER}
+      MYSQL_PASSWORD: ${OCEAN_DB_USER_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build: .
+    container_name: ocean-api-server
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      OCEAN_DB_PORT: ${OCEAN_DB_PORT}
+      OCEAN_DB: ${OCEAN_DB}
+      OCEAN_DB_HOST: ${OCEAN_DB_HOST}
+      OCEAN_USER: ${OCEAN_USER}
+      OCEAN_DB_USER_PASSWORD: ${OCEAN_DB_USER_PASSWORD}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+
+volumes:
+  db_data:
